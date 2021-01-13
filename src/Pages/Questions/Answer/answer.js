@@ -33,12 +33,13 @@ const AnswerViewWithoutStyles = ({
   const writer = userInfo.data.user._id;
   const [editorToggle, setEditorToggle] = React.useState(false);
   const [answer, setAnswer] = React.useState("");
+  // eslint-disable-next-line no-unused-vars
   const [files, setFiles] = React.useState([]);
 
   const onEditorChange = (value) => {
     setAnswer(value);
   };
-
+  
   const onFilesChange = (files) => {
     setFiles(files);
   };

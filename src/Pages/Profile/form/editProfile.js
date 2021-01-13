@@ -20,7 +20,7 @@ export const editProfileViewWithoutStyles = ({
   const [isAPILoading, setIsAPILoading] = React.useState(false);
   const [imgUrl, setImgUrl] = useState("");
   const [initialFormValues, setInitialFormValues] = React.useState({
-    //photo: "",
+    photo: "",
     firstname: "",
     lastname: "",
     description: "",
@@ -37,7 +37,6 @@ export const editProfileViewWithoutStyles = ({
     const userBeingEdited = users.find(
       (user) => user._id === userIdBeingEdited
     );
-    console.log(userBeingEdited);
 
     //user isnt found, because the userid is invalid
     if (!userBeingEdited) {
@@ -47,7 +46,7 @@ export const editProfileViewWithoutStyles = ({
     }
     //set the initial form values
     setInitialFormValues({
-      //photo: userBeingEdited.info.photo,
+      photo: userBeingEdited.info.photo,
       firstname: userBeingEdited.firstname,
       lastname: userBeingEdited.lastname,
       description: userBeingEdited.info.description,
@@ -59,6 +58,7 @@ export const editProfileViewWithoutStyles = ({
   }, [isUsersInitialized, match.params.id, users]);
 
   console.log("editable here", initialFormValues);
+  
   const uploadButton = (
     <div>
       {isAPILoading && <LoadingOutlined />}

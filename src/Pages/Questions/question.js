@@ -7,7 +7,7 @@ import QuestionListCard from "../../Components/Cards/QuestionListCard";
 import Styles from "./styles";
 import { Pagewithheader } from "../../Components/Layout/PageWithHeader/pagewithheader.js";
 import { Answer, Question, User } from "../../store";
-import { Button, List } from "antd";
+import { List } from "antd";
 
 const QuestionViewWithoutStyles = ({
   isInitialized,

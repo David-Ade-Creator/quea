@@ -3,23 +3,23 @@ import React from "react";
 import { connect } from "react-redux";
 import Styles from "./styles";
 import { withStyles } from "@material-ui/styles";
-import { Button, Col, Divider, Row, Tabs } from "antd";
+import { Button, Col, Divider, Row } from "antd";
 import {
   CaretLeftOutlined,
   EditFilled,
-  EditOutlined,
-  QuestionCircleOutlined,
-  ScheduleOutlined,
+  // EditOutlined,
+  // QuestionCircleOutlined,
+  // ScheduleOutlined,
 } from "@ant-design/icons";
 import Avatar from "antd/lib/avatar/avatar";
 import { Pagewithheader } from "../../Components/Layout/PageWithHeader/pagewithheader";
-import { ActivitiesTab } from "./profileTabs/activitiesTab";
-import { QuestionTab } from "./profileTabs/questionTab";
-import { AnswersTab } from "./profileTabs/answersTab";
+// import { ActivitiesTab } from "./profileTabs/activitiesTab";
+// import { QuestionTab } from "./profileTabs/questionTab";
+// import { AnswersTab } from "./profileTabs/answersTab";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { User } from "../../store";
 
-const { TabPane } = Tabs;
+// const { TabPane } = Tabs;
 
 const ProfileViewWithoutStyles = ({
   classes,
@@ -103,7 +103,7 @@ const ProfileViewWithoutStyles = ({
             </p>
           </Col>
         </Row>
-        <Tabs defaultActiveKey="1" centered>
+        {/* <Tabs defaultActiveKey="1" centered>
           <TabPane
             tab={
               <span>
@@ -137,7 +137,7 @@ const ProfileViewWithoutStyles = ({
           >
             <AnswersTab />
           </TabPane>
-        </Tabs>
+        </Tabs> */}
       </div>
     </Pagewithheader>
   );

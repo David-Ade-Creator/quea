@@ -16,11 +16,7 @@ const NavHeaderWithoutStyles = ({toggleSideNav,classes, toggleAnswerModal, userI
       className={classes.container}
     >
       <div className={classes.logo}>Quea</div>
-      <div>
-      <Button type="primary" onClick={toggleSideNav} className={classes.menubuttons}>
-            <MenuFoldOutlined />
-          </Button>
-      </div>
+      
       <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[""]}>
         <Menu.Item key="/">
         <Link to="/">
@@ -36,6 +32,11 @@ const NavHeaderWithoutStyles = ({toggleSideNav,classes, toggleAnswerModal, userI
       <div>
       <Button type="primary" onClick={toggleAnswerModal} className={classes.menubuttons}>
             ASK
+          </Button>
+      </div>
+      <div>
+      <Button type="primary" onClick={toggleSideNav} className={classes.menubuttons}>
+            <MenuFoldOutlined />
           </Button>
       </div>
     </AntdLayout.Header>
