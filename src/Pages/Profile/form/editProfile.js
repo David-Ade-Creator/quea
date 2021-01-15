@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Pagewithheader } from "../../../Components/Layout/PageWithHeader/pagewithheader";
 import { User } from "../../../store";
+import { baseUrl } from "../../../store/baseUrl";
 import Styles from "./styles";
 
 export const editProfileViewWithoutStyles = ({
@@ -80,7 +81,7 @@ export const editProfileViewWithoutStyles = ({
     };
     formData.append("file", info.file);
     try {
-      const imageUrl = await Axios.post("/api/q3/upload/s3", formData, config);
+      const imageUrl = await Axios.post(`${baseUrl}/api/q3/upload/s3`, formData, config);
       setImgUrl(imageUrl.data);
       setIsAPILoading(false);
     } catch (error) {

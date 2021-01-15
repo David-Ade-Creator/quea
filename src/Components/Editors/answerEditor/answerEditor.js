@@ -2,6 +2,7 @@ import React from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import "react-quill/dist/quill.snow.css";
 import axios from 'axios';
+import {baseUrl} from "./../../../store/baseUrl";
 
 var Font = Quill.import("formats/font");
 Font.whitelist = ["Roboto", "Raleway", "Montserrat", "Lato", "Rubik"];
@@ -257,7 +258,7 @@ class AnswerEditor extends React.Component {
             }
             formData.append("file", file);
 
-            axios.post('/api/q3/upload/s3', formData, config)
+            axios.post(`${baseUrl}/api/q3/upload/s3`, formData, config)
                 .then(response => {
                     if (response.data) {
 
@@ -295,7 +296,7 @@ class AnswerEditor extends React.Component {
             }
             formData.append("file", file);
 
-            axios.post('/api/q3/upload/s3', formData, config)
+            axios.post(`${baseUrl}/api/q3/upload/s3`, formData, config)
                 .then(response => {
                     if (response.data) {
 
@@ -333,7 +334,7 @@ class AnswerEditor extends React.Component {
             }
             formData.append("file", file);
 
-            axios.post('/api/q3/upload/s3', formData, config)
+            axios.post(`${baseUrl}/api/q3/upload/s3`, formData, config)
                 .then(response => {
                     if (response.data.success) {
 
