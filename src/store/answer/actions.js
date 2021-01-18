@@ -1,4 +1,5 @@
 import Axios from "axios";
+import {baseUrl} from "../baseUrl";
 const {
   ANSWER_LIST_REQUEST,
   ANSWER_LIST_FAIL,
@@ -26,7 +27,7 @@ function answersRequestFailed(error) {
 export const listAnswers = () => async (dispatch, getState) => {
   dispatch(answersRequest());
   try {
-    const { data } = await Axios.get("/api/q3/answer");
+    const { data } = await Axios.get(`${baseUrl}/api/q3/answer`);
     dispatch(answersRequestSuccess(data));
   } catch (error) {
     dispatch(answersRequestFailed(error.response.data.errors));
@@ -48,7 +49,7 @@ function answerSaveFailed(error) {
 export const saveAnswer = (answer) => async (dispatch) => {
   dispatch(answerSaveRequest());
   try {
-    const { data } = await Axios.post("/api/q3/answer", answer);
+    const { data } = await Axios.post(`${baseUrl}/api/q3/answer`, answer);
     dispatch(answerSaveSuccess(data));
   } catch (error) {
     dispatch(answerSaveFailed(error.response.data.errors));
@@ -78,7 +79,7 @@ export const questionAnswers = (questionId) => async (dispatch, getState) => {
       );
       dispatch(questionAnswersListSuccess(data));
     } else {
-      const { data } = await Axios.get(`/api/q3/questionAnswer/${questionId}`);
+      const { data } = await Axios.get(`${baseUrl}/api/q3/questionAnswer/${questionId}`);
       dispatch(questionAnswersListSuccess(data));
     }
   } catch (error) {

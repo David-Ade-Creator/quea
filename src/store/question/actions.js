@@ -1,4 +1,5 @@
 import Axios from "axios";
+import {baseUrl} from "../baseUrl";
 const {
   QUESTION_LIST_REQUEST,
   QUESTION_LIST_SUCCESS,
@@ -28,8 +29,9 @@ export const listquestion = (force) => async (dispatch, getState) => {
   if (!force && question.isInitialized) return;
   dispatch(questionsRequest());
   try {
-    const { data } = await Axios.get("/api/q3/question");
+    const { data } = await Axios.get(`${baseUrl}/api/q3/question`);
     dispatch(questionRequestSuccess(data));
+    
   } catch (error) {
     dispatch(questionRequestFailed(error.response.data.errors));
   }
@@ -51,7 +53,7 @@ export const savequestion = (question) => async (dispatch) => {
   console.log(question)
   dispatch(questionSaveRequest());
   try {
-    const response = await Axios.post("/api/q3/question", question);
+    const response = await Axios.post(`${baseUrl}/api/q3/question`, question);
     dispatch(questionSaveSuccess(response.data));
   } catch (error) {
     console.log("CATCH = ", error.response);
@@ -82,7 +84,7 @@ export const questionDetails = (questionId) => async (dispatch, getState) => {
     );
     dispatch(questionDetailSuccess(data));
   } else {
-    const { data } =  await Axios.get(`/api/q3/question/${questionId}`);
+    const { data } =  await Axios.get(`${baseUrl}/api/q3/question/${questionId}`);
     dispatch(questionDetailSuccess(data));
   }
   } catch (error) {

@@ -5,6 +5,7 @@ import {
   USER_FORGOT_FAIL,
   USER_FORGOT_REQUEST,
   USER_FORGOT_SUCCESS,
+  USER_LOGOUT,
   USER_RESET_FAIL,
   USER_RESET_REQUEST,
   USER_RESET_SUCCESS,
@@ -93,6 +94,8 @@ export const authenticationReducer = (state = initialState, action) => {
         isSigninLoaded: true,
         isSigninApiCalled: true,
         signinError: null,
+        isAuthenticated: Cookie.getJSON("userInfo"),
+        userInfo: Cookie.getJSON("userInfo"),
       };
     case USER_SIGNIN_FAIL:
       return {
@@ -144,6 +147,13 @@ export const authenticationReducer = (state = initialState, action) => {
         resetPasswordApiCalled: true,
         resetPasswordError: action.payload,
       };
+    case USER_LOGOUT:
+      return {
+        ...state,
+        isSigninSuccessful: false,
+        isAuthenticated: undefined,
+        userInfo: undefined,
+      }
     default:
       return state;
   }

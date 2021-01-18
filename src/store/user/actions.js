@@ -1,4 +1,5 @@
 import Axios from "axios";
+import {baseUrl} from "../baseUrl";
 import {
   USERS_LIST_FAIL,
   USERS_LIST_REQUEST,
@@ -35,7 +36,7 @@ export const usersList = (force) => async (dispatch, getState) => {
 
   dispatch(usersListRequest());
   try {
-    const { data } = await Axios.get(`/api/q3/users`);
+    const { data } = await Axios.get(`${baseUrl}/api/q3/users`);
     dispatch(usersListRequestSuccess(data));
   } catch (error) {
     dispatch(usersListRequestFailed(error));
@@ -65,7 +66,7 @@ export const userProfileInfo = (userId) => async (dispatch, getState) => {
     );
     dispatch(userProfileRequestSuccess(userData));
   } else {
-    const userData  = await Axios.get(`/api/q3/users/${userId}`);
+    const userData  = await Axios.get(`${baseUrl}/api/q3/users/${userId}`);
     dispatch(userProfileRequestSuccess(userData.data));
   }
   } catch (error) {
@@ -90,7 +91,7 @@ export const userEdit = (userDetail) => async (dispatch) => {
   dispatch(userEditRequest());
   try {
     const { data } = await Axios.put(
-      `/api/q3/users/${userDetail.userId}`,
+      `${baseUrl}/api/q3/users/${userDetail.userId}`,
       userDetail
     );
     dispatch(userEditRequestSuccess(data));
@@ -121,7 +122,7 @@ export const userQuestions = (userId) => async (dispatch, getState) => {
       );
       dispatch(userQuestionRequestSuccess(data));
     } else {
-      const { data } = await Axios.get(`/api/q3/users/${userId}/questions`);
+      const { data } = await Axios.get(`${baseUrl}/api/q3/users/${userId}/questions`);
       dispatch(userQuestionRequestSuccess(data));
     }
   } catch (error) {
@@ -151,7 +152,7 @@ export const userAnswers = (userId) => async (dispatch, getState) => {
       );
       dispatch(userAnswerRequestSuccess(data));
     } else {
-      const { data } = await Axios.get(`/api/q3/users/${userId}/answers`);
+      const { data } = await Axios.get(`${baseUrl}/api/q3/users/${userId}/answers`);
       dispatch(userAnswerRequestSuccess(data));
     }
   } catch (error) {

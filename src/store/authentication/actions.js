@@ -1,5 +1,6 @@
 import Axios from "axios";
-import { routerActions } from "connected-react-router";
+import {baseUrl} from "../baseUrl";
+import { push } from 'react-router-redux';
 import { openNotification } from "../../Components/utils/notification";
 import Cookie from 'js-cookie';
 const {
@@ -18,6 +19,7 @@ const {
   USER_RESET_REQUEST,
   USER_RESET_SUCCESS,
   USER_RESET_FAIL,
+  USER_LOGOUT,
 } = require("./actionType");
 
 function signupRequest() {
@@ -32,15 +34,15 @@ function signupFailed(error) {
   return { type: USER_SIGNUP_FAIL, payload: error };
 }
 
-export const signup = (value) => async (dispatch) => {
+export const signup = (value) => async (dispatch, useHistory) => {
   dispatch(signupRequest());
   try {
-    const { data } = await Axios.post("/api/q3/signup", value);
+    const { data } = await Axios.post(`${baseUrl}/api/q3/signup`, value);
     const title = "Signup successful";
     const description = data.message;
     openNotification(title, description);
     dispatch(signupSuccess(data));
-    //dispatch(routerActions.replace("/signin"));
+    dispatch(push("/signin"));
   } catch (error) {
     //   console.log("CATCH = ", error.response);
     dispatch(signupFailed(error.response.data.errors));
@@ -63,13 +65,12 @@ export const activate = (token) => async (dispatch) => {
   console.log("i was called")
   dispatch(activateAccountRequest());
   try {
-    const { data } = await Axios.post(`/api/q3/${token}/activate`);
+    const { data } = await Axios.post(`${baseUrl}/api/q3/${token}/activate`);
     const title = "Account Activated";
     const description = data.message;
     openNotification(title, description);
     dispatch(activateAccountSuccess(data));
-    dispatch(routerActions.replace("/signin"));
-    console.log("got here");
+    dispatch(push("/signin"));
   } catch (error) {
        console.log("CATCH = ", error.response);
     dispatch(activateAccountFailed(error.response.data.errors));
@@ -91,9 +92,10 @@ function signinFailed(error) {
 export const signin = (value) => async (dispatch) => {
   dispatch(signinRequest());
   try {
-    const { data } = await Axios.post("/api/q3/signin", value);
+    const { data } = await Axios.post(`${baseUrl}/api/q3/signin`, value);
     Cookie.set('userInfo', JSON.stringify(data));
     dispatch(signinSuccess(data));
+    dispatch(push("/"));
   } catch (error) {
     //   console.log("CATCH = ", error.response);
     dispatch(signinFailed(error.response.data.errors));
@@ -115,7 +117,7 @@ function forgotPasswordFailed(error) {
 export const forgotPassword = (value) => async (dispatch) => {
   dispatch(forgotPasswordRequest());
   try {
-    const { data } = await Axios.put("/api/q3/sendPasswordLink", value);
+    const { data } = await Axios.put(`${baseUrl}/api/q3/sendPasswordLink`, value);
     const title = "Password reset Email Sent";
     const description = data.message;
     openNotification(title, description);
@@ -141,15 +143,22 @@ function resetPasswordFailed(error) {
 export const resetPassword = (value) => async (dispatch) => {
   dispatch(resetPasswordRequest());
   try {
-    const { data } = await Axios.put("/api/q3/resetPassword", value);
+    const { data } = await Axios.put(`${baseUrl}/api/q3/resetPassword`, value);
     const title = "Password Changes";
     const description = data.message;
     openNotification(title, description);
     dispatch(resetPasswordSuccess(data));
+    dispatch(push("/signin"));
   } catch (error) {
     //   console.log("CATCH = ", error.response);
     dispatch(resetPasswordFailed(error.response.data.errors));
   }
+};
+
+export const logout = () => (dispatch) => {
+  console.log('i was called');
+  Cookie.remove("userInfo");
+  dispatch({ type: USER_LOGOUT });
 };
 
 

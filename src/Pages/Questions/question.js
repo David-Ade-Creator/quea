@@ -17,6 +17,7 @@ const QuestionViewWithoutStyles = ({
   initializeAnswerState,
   initalizeUsersState,
   isUsersInitialized,
+  isAuthenticated
 }) => {
   React.useEffect(() => {
     initializeQuestionState();
@@ -56,6 +57,7 @@ const QuestionViewWithoutStyles = ({
 export const QuestionPageView = withStyles(Styles)(QuestionViewWithoutStyles);
 
 const mapState = (state) => ({
+  isAuthenticated: state.authenticate.isAuthenticated,
   questions: state.question.questions,
   isInitialized: state.question.isInitialized,
   isUsersInitialized: state.user.isInitialized,

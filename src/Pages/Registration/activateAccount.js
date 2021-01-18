@@ -6,6 +6,7 @@ import Styles from "./styles";
 import { withStyles } from "@material-ui/styles";
 import { Button, Form, Col, Row, Alert } from "antd";
 import { Authentication } from "../../store";
+import { useHistory } from "react-router-dom";
 
 const ActivateAccountViewWithoutStyles = ({
   classes,
@@ -13,15 +14,21 @@ const ActivateAccountViewWithoutStyles = ({
   activateAccount,
   isActivateLoaded,
   isActivateApiCalled,
+  isActivateApiSuccess,
   activationError,
+  isAuthenticated
 }) => {
+
+  const history = useHistory()
+
   const onFinish = (values) => {
     activateAccount(match.params.token);
   };
 
   useEffect(() => {
     activateAccount(match.params.token);
-  }, [activateAccount, match.params.token]);
+    if (isActivateApiSuccess) history.push("/signin")
+  }, [activateAccount, history, isActivateApiSuccess, match.params.token]);
 
   return (
     <Pagewithoutheader>
@@ -64,9 +71,11 @@ export const ActivateAccountPageView = withStyles(Styles)(
 );
 
 const mapState = (state) => ({
+  isAuthenticated: state.authenticate.isAuthenticated,
   activationError: state.authenticate.activationError,
   isActivateLoaded: state.authenticate.isActivateLoaded,
   isActivateApiCalled: state.authenticate.isActivateApiCalled,
+  isActivateApiSuccess: state.authenticate.isActivateApiSuccess,
 });
 
 const mapDispatch = (dispatch) => ({

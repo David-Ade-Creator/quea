@@ -20,6 +20,7 @@ export const PagewithheaderViewWithoutStyles = ({
   isAnswerSaved,
   isSaveAnswerInitialized,
   onBack,
+  logout,
   userInfo
 }) => {
   const [isSidebarVisible, setSidebarVisible] = useState(false);
@@ -42,8 +43,8 @@ export const PagewithheaderViewWithoutStyles = ({
     <BackTop>
       <div><CaretUpOutlined style={{ color: '#48a1fa', fontSize: '22px' }} /></div>
     </BackTop>
-      <NavHeader toggleSideNav={toggleSidebar} toggleAnswerModal={toggleAnswerModal} userInfo={userInfo} />
-      <Sidebar toggleSideNav={toggleSidebar} visible={isSidebarVisible} userInfo={userInfo}/>
+      <NavHeader toggleSideNav={toggleSidebar} toggleAnswerModal={toggleAnswerModal} userInfo={userInfo} logout={logout} />
+      <Sidebar toggleSideNav={toggleSidebar} visible={isSidebarVisible} userInfo={userInfo} logout={logout}/>
       <Helmet
         titleTemplate="Quea"
         defaultTitle="Quea"
@@ -85,7 +86,8 @@ const mapState = (state) => ({
   showModalState: state.layout.isAnswerModalVisible,
   isAnswerSaved: state.answer.isAnswerSaved,
   isSaveAnswerInitialized : state.answer.isSaveAnswerInitialized,
-  userInfo : state.authenticate.userInfo
+  userInfo : state.authenticate.userInfo,
+  logout: state.authenticate.logout
 });
 
 const connector = connect(mapState, null);

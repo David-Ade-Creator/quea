@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import Pagewithoutheader from "../../Components/Layout/PageWithoutHeader/pagewithoutheader";
 
 import Styles from "./styles";
 import { withStyles } from "@material-ui/styles";
 import { Button, Input, Form, Col, Row, Alert } from "antd";
 import { MailOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
 import { Authentication } from "../../store";
 
 const ResetLinkViewWithoutStyles = ({
@@ -17,7 +17,13 @@ const ResetLinkViewWithoutStyles = ({
   forgotPasswordLoaded,
   forgotPasswordApiCalled,
 }) => {
-console.log(forgotPasswordSuccess);
+
+  const history = useHistory(); 
+
+  React.useEffect(() => {
+    if(forgotPasswordSuccess) history.push("/signin");
+  },[forgotPasswordSuccess, history]);
+  
   const onFinish = (values) => {
    forgotPassword(values);
   };
@@ -83,6 +89,7 @@ console.log(forgotPasswordSuccess);
 export const ResetLinkPageView = withStyles(Styles)(ResetLinkViewWithoutStyles);
 
 const mapState = (state) => ({
+  isAuthenticated: state.authenticate.isAuthenticated,
   forgotPasswordSuccess: state.authenticate.forgotPasswordSuccess,
   forgotPasswordError: state.authenticate.forgotPasswordError,
   forgotPasswordLoaded: state.authenticate.forgotPasswordLoaded,

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Pagewithoutheader from "../../Components/Layout/PageWithoutHeader/pagewithoutheader";
 
 import Styles from "./styles";
@@ -17,6 +17,7 @@ const SigninViewWithoutStyles = ({
   isSigninLoaded,
   isSigninApiCalled,
 }) => {
+  const history = useHistory();
   const [initialFormValues, setInitialFormValues] = React.useState({
     email: "",
     password: "",
@@ -24,10 +25,11 @@ const SigninViewWithoutStyles = ({
   });
 
   React.useEffect(() => {
-    if (!signinError && isSigninSuccessful){
+    if (isSigninSuccessful){
+      history.push("/")
       setInitialFormValues(initialFormValues)
     }
-  }, [initialFormValues, isSigninSuccessful, signinError]);
+  }, [history, initialFormValues, isSigninSuccessful, signinError]);
 
   const onFinish = (values) => {
     signin(values);

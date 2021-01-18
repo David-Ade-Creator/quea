@@ -6,7 +6,7 @@ import Styles from "./styles";
 import { withStyles } from "@material-ui/styles";
 import { Button, Input, Form, Col, Row, Alert } from "antd";
 import { LockOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Authentication } from "../../store";
 
 const ResetPasswordViewWithoutStyles = ({
@@ -15,10 +15,18 @@ const ResetPasswordViewWithoutStyles = ({
   resetPasswordLoaded,
   resetPasswordApiCalled,
   resetPasswordError,
+  resetPasswordSuccess,
+  isAuthenticated,
   match
 }) => {
+  const history = useHistory();
+
+  React.useEffect(()=> {
+    if (resetPasswordSuccess) history.push("/signin");
+  },[history, resetPasswordSuccess]);
+
+  
   const onFinish = (values) => {
-    console.log(values);
     resetPassword(values);
   };
 
@@ -99,9 +107,11 @@ export const ResetPasswordPageView = withStyles(Styles)(
 );
 
 const mapState = (state) => ({
+  isAuthenticated: state.authenticate.isAuthenticated,
   resetPasswordError: state.authenticate.resetPasswordError,
   resetPasswordLoaded: state.authenticate.resetPasswordLoaded,
   resetPasswordApiCalled: state.authenticate.resetPasswordApiCalled,
+  resetPasswordSuccess: state.authenticate.resetPasswordSuccess,
 });
 
 const mapDispatch = (dispatch) => ({

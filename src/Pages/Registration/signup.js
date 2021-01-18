@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import Pagewithoutheader from "../../Components/Layout/PageWithoutHeader/pagewithoutheader";
 
 import Styles from "./styles";
@@ -17,6 +18,7 @@ const SignupViewWithoutStyles = ({
   isSignUpLoaded,
   isSignupApiCalled
 }) => {
+  const history = useHistory()
   const [initialFormValues, setInitialFormValues] = React.useState({
     firstname: "",
     lastname: "",
@@ -27,10 +29,10 @@ const SignupViewWithoutStyles = ({
  
   useEffect(() => {
     if (!signupError && isSignUpSuccessful) {
-      console.log(!signupError, isSignUpSuccessful);
+       history.push("/signin");
       setInitialFormValues(initialFormValues);
     }
-  }, [initialFormValues, isSignUpSuccessful, signupError]);
+  }, [history, initialFormValues, isSignUpSuccessful, signupError]);
 
   const onFinish = (values) => {
     signUp(values);
