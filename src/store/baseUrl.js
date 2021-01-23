@@ -1,1 +1,1 @@
-export const baseUrl = "http://localhost:1100";
+export const baseUrl = "https://queaserver.herokuapp.com";
