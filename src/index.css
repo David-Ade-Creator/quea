@@ -1,5 +1,9 @@
 @import '~antd/dist/antd.css';
 
+header.ant-layout-header.jss1 {
+  min-height: 7.3vh;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

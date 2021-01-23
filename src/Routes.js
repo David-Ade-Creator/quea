@@ -5,6 +5,7 @@ import { ProtectedRoute } from "./Components/ProtectedRoute/protectedRoute";
 import { editProfilePage } from "./Pages/Profile/form/editProfile";
 import { ProfilePage } from "./Pages/Profile/profile";
 import { AnswerPage } from "./Pages/Questions/Answer/answer";
+import { HomePage } from "./Pages/Questions/Home/home";
 import { QuestionPage } from "./Pages/Questions/question";
 import { ActivateAccountPage } from "./Pages/Registration/activateAccount";
 import { ResetPasswordPage } from "./Pages/Registration/resetPassword";
@@ -16,9 +17,16 @@ const Routes = () => {
   return (
     <PageLayout>
       <Switch>
-        <Route
+      <Route
           exact
           path="/"
+          render={(props) => (
+            <ProtectedRoute {...props} Component={HomePage} />
+          )}
+        />
+        <Route
+          exact
+          path="/questions"
           render={(props) => (
             <ProtectedRoute {...props} Component={QuestionPage} />
           )}

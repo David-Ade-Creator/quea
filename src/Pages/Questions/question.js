@@ -1,5 +1,7 @@
 import React from "react";
 
+import io from 'socket.io-client';
+
 import { connect } from "react-redux";
 
 import { withStyles } from "@material-ui/styles";
@@ -8,6 +10,7 @@ import Styles from "./styles";
 import { Pagewithheader } from "../../Components/Layout/PageWithHeader/pagewithheader.js";
 import { Answer, Question, User } from "../../store";
 import { List } from "antd";
+import { baseUrl } from "../../store/baseUrl";
 
 const QuestionViewWithoutStyles = ({
   isInitialized,
@@ -17,13 +20,16 @@ const QuestionViewWithoutStyles = ({
   initializeAnswerState,
   initalizeUsersState,
   isUsersInitialized,
-  isAuthenticated
+  isAuthenticated,
+  newQuestionState
 }) => {
+  const socket = io(baseUrl);
   React.useEffect(() => {
     initializeQuestionState();
     initializeAnswerState();
     initalizeUsersState();
-  }, [initalizeUsersState, initializeAnswerState, initializeQuestionState]);
+    newQuestionState();
+  }, [initalizeUsersState, initializeAnswerState, initializeQuestionState, newQuestionState, socket]);
 
   const loadMore = () => {
     console.log("loadmore");
@@ -66,6 +72,8 @@ const mapState = (state) => ({
 const mapDispatch = (dispatch) => ({
   initializeQuestionState: (force) =>
     dispatch(Question.Actions.listquestion(force)),
+    newQuestionState: () =>
+    dispatch(Question.Actions.questions()),
   initializeAnswerState: () => dispatch(Answer.Actions.listAnswers()),
   initalizeUsersState: () => dispatch(User.Actions.usersList()),
 });

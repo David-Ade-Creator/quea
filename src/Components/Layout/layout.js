@@ -17,7 +17,7 @@ const LayoutViewWithoutStyles = ({
       <AntdLayout>
         <AntdLayout>{children}</AntdLayout>
       </AntdLayout>
-      <AntdLayout.Footer style={{ textAlign: "center" }}>
+      <AntdLayout.Footer style={{ textAlign: "center", height:"7vh" }}>
         By @ David Adeyemi
       </AntdLayout.Footer>
     </AntdLayout>

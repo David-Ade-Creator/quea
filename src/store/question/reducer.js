@@ -51,7 +51,7 @@ export const questionReducer = (state = initialState, action) => {
     return {
       ...state,
       isQuestionSaveInitialized: true,
-      questions: state.questions.concat(action.payload),
+      questions: action.payload,
       isQuestionSaveError: null,
     };
     case QUESTION_SAVE_FAIL: 

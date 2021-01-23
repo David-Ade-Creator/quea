@@ -11,7 +11,7 @@ export default function QuestionListCard({ question }) {
     <Card style={{ width: "100%" }}>
       <Link to={`/profile/${question.whoasked._id}`}><Meta
         avatar={<Avatar>{question.whoasked.firstname.substring(0, 1)}</Avatar>}
-        title={question.whoasked.firstname}
+        title={question.whoasked.firstname + " " + question.whoasked.lastname}
       /></Link>
       <div style={{ marginTop: "10px" }}>
         <p>

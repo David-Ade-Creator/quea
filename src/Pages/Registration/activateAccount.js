@@ -16,7 +16,8 @@ const ActivateAccountViewWithoutStyles = ({
   isActivateApiCalled,
   isActivateApiSuccess,
   activationError,
-  isAuthenticated
+  isAuthenticated,
+  isActivateUser
 }) => {
 
   const history = useHistory()
@@ -27,8 +28,8 @@ const ActivateAccountViewWithoutStyles = ({
 
   useEffect(() => {
     activateAccount(match.params.token);
-    if (isActivateApiSuccess) history.push("/signin")
-  }, [activateAccount, history, isActivateApiSuccess, match.params.token]);
+    if (isActivateUser) history.push("/signin")
+  }, [activateAccount, history, isActivateUser, match.params.token]);
 
   return (
     <Pagewithoutheader>
@@ -76,6 +77,7 @@ const mapState = (state) => ({
   isActivateLoaded: state.authenticate.isActivateLoaded,
   isActivateApiCalled: state.authenticate.isActivateApiCalled,
   isActivateApiSuccess: state.authenticate.isActivateApiSuccess,
+  isActivateUser: state.authenticate.isActivateUser,
 });
 
 const mapDispatch = (dispatch) => ({

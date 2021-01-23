@@ -14,8 +14,9 @@ export default function Sidebar({visible,toggleSideNav,userInfo, logout}) {
       key="left"
       >
       <h3><Link to="/">Home</Link></h3>
+      <h3><Link to="/questions">Questions</Link></h3>
       <h3><Link to={`/profile/${userInfo.data.user._id}`}>Profile</Link></h3>
-      <Button type="primary" onClick={console.log('clicked')}>Logout</Button>
+      <Button type="primary" key="logout" onClick={console.log('clicked')}>Logout</Button>
     </Drawer>
     )
 }

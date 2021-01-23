@@ -7,7 +7,7 @@ import { withStyles } from "@material-ui/styles";
 
 import { Button, Divider } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
-import AnswersListCard from "../../../Components/Cards/AnswerCard";
+import AnswersCard from "../../../Components/Cards/AnswerCard";
 import { Pagewithheader } from "../../../Components/Layout/PageWithHeader/pagewithheader";
 import Meta from "antd/lib/card/Meta";
 import Moment from "react-moment";
@@ -28,6 +28,8 @@ const AnswerViewWithoutStyles = ({
   initializeAnswerListState,
   userInfo,
   answerQuestion,
+  answerLike,
+  answerUnlike,
 }) => {
   const questionId = match.params.id;
   const writer = userInfo.data.user._id;
@@ -39,7 +41,7 @@ const AnswerViewWithoutStyles = ({
   const onEditorChange = (value) => {
     setAnswer(value);
   };
-  
+
   const onFilesChange = (files) => {
     setFiles(files);
   };
@@ -79,7 +81,11 @@ const AnswerViewWithoutStyles = ({
         <div>
           <Meta
             avatar={
-              <Avatar><Link to={`/profile/${question?.whoasked?._id}`}>{question?.whoasked?.firstname.substring(0, 1)}</Link></Avatar>
+              <Avatar>
+                <Link to={`/profile/${question?.whoasked?._id}`}>
+                  {question?.whoasked?.firstname.substring(0, 1)}
+                </Link>
+              </Avatar>
             }
             title={question?.whoasked?.firstname}
             description={<Moment fromNow>{question?.createdAt}</Moment>}
@@ -132,7 +138,12 @@ const AnswerViewWithoutStyles = ({
         )}
 
         <div className={classes.answercontainer}>
-          <AnswersListCard answers={answers} />
+          <AnswersCard
+            answers={answers}
+            answerLike={answerLike}
+            answerUnlike={answerUnlike}
+            user={userInfo.data.user}
+          />
         </div>
       </div>
     </Pagewithheader>
@@ -157,6 +168,8 @@ const mapDispatch = (dispatch) => ({
     dispatch(Answer.Actions.questionAnswers(questionId)),
   answerQuestion: (questionAnswer) =>
     dispatch(Answer.Actions.saveAnswer(questionAnswer)),
+  answerLike: (data) => dispatch(Answer.Actions.answerLike(data)),
+  answerUnlike: (data) => dispatch(Answer.Actions.answerUnlike(data)),
 });
 
 const connector = connect(mapState, mapDispatch);

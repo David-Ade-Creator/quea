@@ -5,6 +5,7 @@ import {
   ANSWER_SAVE_FAIL,
   ANSWER_SAVE_REQUEST,
   ANSWER_SAVE_SUCCESS,
+  LIKEUNLIKE_ANSWER,
   QUESTIONANSWER_LIST_FAIL,
   QUESTIONANSWER_LIST_REQUEST,
   QUESTIONANSWER_LIST_SUCCESS,
@@ -73,7 +74,7 @@ export const answerReducer = (state = initialState, action) => {
         ...state,
         isSaveAnswerInitialized: true,
         isAnswerSaved:true,
-        questionAnswers: state.questionAnswers.concat(action.payload),
+        questionAnswers: action.payload,
         answerSaveError: null,
       };
     case ANSWER_SAVE_FAIL:
@@ -82,6 +83,12 @@ export const answerReducer = (state = initialState, action) => {
         isSaveAnswerInitialized: true,
         answerSaveError: action.payload,
       };
+
+    case LIKEUNLIKE_ANSWER: 
+    return {
+      ...state,
+      answers : action.payload
+    }
     default:
       return state;
   }

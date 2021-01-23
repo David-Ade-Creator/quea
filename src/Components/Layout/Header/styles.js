@@ -2,15 +2,14 @@ import { createStyles } from "@material-ui/core";
 
 const styles = (theme) =>
   createStyles({
-    container: {
+    headercontainer: {
+      width:"100vw",
       position: "fixed",
-      width: "100%",
-      lineHeight: "50px",
-      padding: "0",
+      padding: "0 10px",
       display: "flex",
-      alignItems: "center",
       justifyContent: "center",
       zIndex: "1",
+      backgroundColor: "#001529"
     },
     logo: {
       color:"white",
@@ -19,7 +18,7 @@ const styles = (theme) =>
     },
     header : {
       display:"flex",
-      paddingLeft: "10px",
+      paddingLeft: "0",
       width:"70%",
       justifyContent:"space-between",
       [theme.breakpoints.down('md')]: {
@@ -37,13 +36,11 @@ const styles = (theme) =>
     },
     menubuttons: {
       margin:'0 5px 0 5px',
-      height:"100%",
       backgroundColor:"transparent",
       borderColor:"transparent",
     } ,
     drawerbutton: {
       marginRight:'5px',
-      height:"100%",
       backgroundColor:"transparent",
       borderColor:"transparent",
       [theme.breakpoints.up('md')]: {

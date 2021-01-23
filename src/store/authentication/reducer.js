@@ -2,6 +2,7 @@ import Cookie from "js-cookie";
 import {
   ACTIVATE_ACCOUNT_FAIL,
   ACTIVATE_ACCOUNT_REQUEST,
+  ACTIVATE_ACCOUNT_SUCCESS,
   USER_FORGOT_FAIL,
   USER_FORGOT_REQUEST,
   USER_FORGOT_SUCCESS,
@@ -33,6 +34,7 @@ const initialState = {
   //activate state
   isActivateLoaded: false,
   isActivateApiCalled: false,
+  isActivateUser: false,
   activationError: null,
   //resetpasswordlink state
   forgotPasswordSuccess: false,
@@ -71,6 +73,14 @@ export const authenticationReducer = (state = initialState, action) => {
         ...state,
         isActivateLoaded: false,
         isActivateApiCalled: true,
+        activationError: null,
+      };
+      case ACTIVATE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        isActivateLoaded: true,
+        isActivateApiCalled: true,
+        isActivateUser: true,
         activationError: null,
       };
     case ACTIVATE_ACCOUNT_FAIL:
