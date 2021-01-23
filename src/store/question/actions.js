@@ -36,7 +36,9 @@ function questionRequestFailed(error) {
   };
 }
 
-export const listquestion = (force) => async (dispatch) => {
+export const listquestion = (force) => async (dispatch, getState) => {
+  const { question } = getState();
+  if (!force && question.isInitialized) return;
   dispatch(questionsRequest());
   try {
     socket.emit("question list output");
