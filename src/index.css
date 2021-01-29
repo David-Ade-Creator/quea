@@ -1,7 +1,7 @@
 @import '~antd/dist/antd.css';
 
 header.ant-layout-header.jss1 {
-  min-height: 7.3vh;
+  min-height: 10vh;
 }
 
 body {

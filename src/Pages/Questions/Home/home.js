@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import Styles from "./styles";
-import { withStyles } from "@material-ui/styles";
+import { withStyles } from "@material-ui/core";
 
 import AnswersListCard from "../../../Components/Cards/AnswerListCard";
 import { Pagewithheader } from "../../../Components/Layout/PageWithHeader/pagewithheader";

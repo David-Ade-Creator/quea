@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Pagewithoutheader from "../../Components/Layout/PageWithoutHeader/pagewithoutheader";
 
 import Styles from "./styles";
-import { withStyles } from "@material-ui/styles";
+import { withStyles } from "@material-ui/core";
 import { Button, Input, Form, Col, Row, Alert } from "antd";
 import { LockOutlined } from "@ant-design/icons";
 import { Link, useHistory } from "react-router-dom";

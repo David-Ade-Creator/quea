@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import Pagewithoutheader from "../../Components/Layout/PageWithoutHeader/pagewithoutheader";
 
 import Styles from "./styles";
-import { withStyles } from "@material-ui/styles";
+import { withStyles } from "@material-ui/core";
 import { Button, Input, Form, Col, Row, Checkbox, Alert } from "antd";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Authentication } from "../../store";

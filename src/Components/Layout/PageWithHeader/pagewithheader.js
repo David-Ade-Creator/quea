@@ -39,7 +39,7 @@ export const PagewithheaderViewWithoutStyles = ({
   }, [isAnswerSaved])
 
   return (
-    <>
+    <AntdLayout>
     <BackTop>
       <div><CaretUpOutlined style={{ color: '#48a1fa', fontSize: '22px' }} /></div>
     </BackTop>
@@ -74,7 +74,7 @@ export const PagewithheaderViewWithoutStyles = ({
           </Col>
         </Row>
       </AntdLayout.Content>
-    </>
+    </AntdLayout>
   );
 };
 

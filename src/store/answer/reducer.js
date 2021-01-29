@@ -49,6 +49,7 @@ export const answerReducer = (state = initialState, action) => {
       return {
         ...state,
         questionAnswersIsinitialized: false,
+        questionAnswers:[]
       };
     case QUESTIONANSWER_LIST_SUCCESS:
       return {

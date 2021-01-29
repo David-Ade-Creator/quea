@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 
 import { connect } from "react-redux";
 
-import { withStyles } from "@material-ui/styles";
+import { withStyles } from "@material-ui/core";
 import QuestionListCard from "../../Components/Cards/QuestionListCard";
 import Styles from "./styles";
 import { Pagewithheader } from "../../Components/Layout/PageWithHeader/pagewithheader.js";

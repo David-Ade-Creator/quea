@@ -2,7 +2,7 @@ import React from "react";
 
 import { connect } from "react-redux";
 import Styles from "./styles";
-import { withStyles } from "@material-ui/styles";
+import { withStyles } from "@material-ui/core";
 import { Button, Col, Divider, Row } from "antd";
 import {
   CaretLeftOutlined,
@@ -27,6 +27,7 @@ const ProfileViewWithoutStyles = ({
   match,
   isUserProfileInitialized,
   userProfile,
+  isUserInitialized
 }) => {
 
   React.useEffect(() => {
@@ -34,7 +35,7 @@ const ProfileViewWithoutStyles = ({
     initializeUserProfileState(userId);
   }, [initializeUserProfileState, match.params.id]);
   return (
-    <Pagewithheader isLoading={!isUserProfileInitialized}>
+    <Pagewithheader isLoading={!isUserProfileInitialized && !isUserInitialized}>
        <div className={classes.backbtn}>
         <Button onClick={() => window.history.back()}>
           <CaretLeftOutlined />
@@ -48,7 +49,7 @@ const ProfileViewWithoutStyles = ({
             md={24}
             sm={24}
             xs={24}
-            style={{ minHeight: "250px", textAlign: "center", marginTop: "8%" }}
+            className={classes.photodiv}
           >
             <Avatar
               shape="square"
@@ -68,7 +69,7 @@ const ProfileViewWithoutStyles = ({
             md={24}
             sm={24}
             xs={24}
-            style={{ minHeight: "250px", padding: "25px 10px" }}
+            className={classes.editdiv}
           >
             <Row>
               <Link to={`/editprofile/${userProfile?._id}`}>
@@ -146,6 +147,7 @@ const ProfileViewWithoutStyles = ({
 export const ProfilePageView = withStyles(Styles)(ProfileViewWithoutStyles);
 
 const mapState = (state) => ({
+  isUserInitialized: state.user.isInitialized,
   isUserProfileInitialized: state.user.isUserProfileInitialized,
   userProfile: state.user.userProfile,
 });

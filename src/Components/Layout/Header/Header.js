@@ -3,15 +3,14 @@ import {
   EditOutlined,
   HomeOutlined,
   MenuFoldOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
 import { withStyles } from "@material-ui/core";
-import { Button, Menu } from "antd";
-import AntdLayout from "antd/lib/layout";
+import { Button } from "antd";
 import { connect } from "react-redux";
 import Styles from "./styles";
 import { Link } from "react-router-dom";
 import { Layout } from "../../../store";
+import AntdLayout from "antd/lib/layout";
 
 const NavHeaderWithoutStyles = ({
   toggleSideNav,
@@ -21,59 +20,22 @@ const NavHeaderWithoutStyles = ({
   logout,
 }) => {
   return (
-    <AntdLayout.Header className={classes.headercontainer}>
+    <AntdLayout.Header className={classes.headercontainer} >
       <div className={classes.header}>
-        <div className={classes.logo}>Quea</div>
-        <div className={classes.navlist}>
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            className={classes.menuitems}
-            defaultSelectedKeys={[""]}
-          >
-            <Menu.Item key="/questions">
-              <Link to="/questions">Questions</Link>
-            </Menu.Item>
-            <Menu.Item key="/">
-              <Link to="/">Home</Link>
-            </Menu.Item>
-            {/* <Menu.Item key="/a">
-              <Link to="/">Steams</Link>
-            </Menu.Item> */}
-            <Menu.Item key="/profile">
-              <Link to={`/profile/${userInfo.data.user._id}`}>Profile</Link>
-            </Menu.Item>
-          </Menu>
-          <div>
-            <Button
-              type="primary"
-              key="edit"
-              onClick={console.log("/questions")}
-              className={classes.drawerbutton}
-            >
-              <Link to="/questions"><EditOutlined /></Link>
-            </Button>
-          </div>
-          <div>
-            <Button
-              type="primary"
-              key="home"
-              className={classes.drawerbutton}
-            >
-              <Link to="/"><HomeOutlined /></Link>
-            </Button>
-          </div>
-          <div>
-            <Button
-              type="primary"
-              key="profile"
-              className={classes.drawerbutton}
-            >
-              <Link to={`/profile/${userInfo.data.user._id}`}><UserOutlined /></Link>
-            </Button>
-          </div>
-          <div>
-            <Button
+        <div><h3 className={classes.logo}>Quea</h3></div>
+        <div className={classes.navbar}>
+          <ul className={classes.navlist}>
+            <li className={classes.navitems}><Link to="/questions"  style={{color:"white"}}>Questions</Link></li>
+            <li className={classes.navitems}><Link to="/" style={{color:"white"}}>Home</Link></li>
+            <li className={classes.navitems}><Link to={`/profile/${userInfo.data.user._id}`} style={{color:"white"}}>Profile</Link></li>
+          </ul>
+          <ul className={classes.navlist2}>
+            <li className={classes.navitems}><Link to="/questions" style={{color:"white"}}><EditOutlined /></Link></li>
+            <li className={classes.navitems}><Link to="/" style={{color:"white"}}><HomeOutlined /></Link></li>
+            {/* <li className={classes.navitems}><Link to={`/profile/${userInfo.data.user._id}`} style={{color:"white"}}><UserOutlined /></Link></li> */}
+          </ul>
+          <span>
+          <Button
               type="primary"
               key="ask"
               onClick={toggleAnswerModal}
@@ -81,8 +43,6 @@ const NavHeaderWithoutStyles = ({
             >
               ASK
             </Button>
-          </div>
-          <div>
             <Button
               type="primary"
               key="drawer"
@@ -91,9 +51,9 @@ const NavHeaderWithoutStyles = ({
             >
               <MenuFoldOutlined />
             </Button>
-          </div>
+          </span>
         </div>
-      </div>
+        </div>
     </AntdLayout.Header>
   );
 };

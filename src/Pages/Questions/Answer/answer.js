@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import "./answer.css";
 
 import Styles from "./styles";
-import { withStyles } from "@material-ui/styles";
+import { withStyles } from "@material-ui/core";
 
 import { Button, Divider } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
@@ -90,7 +90,7 @@ const AnswerViewWithoutStyles = ({
             title={question?.whoasked?.firstname}
             description={<Moment fromNow>{question?.createdAt}</Moment>}
           />
-          <h2>{question?.question}</h2>
+          <h3>{question?.question}</h3>
           <h4>
             {answers.length > 0 ? `${answers.length} answers` : "No answer yet"}
           </h4>
@@ -154,7 +154,7 @@ export const AnswerPageView = withStyles(Styles)(AnswerViewWithoutStyles);
 
 const mapState = (state) => ({
   question: state.question.question,
-  isInitialized: state.question.questionDetailIsinitialized,
+  isInitialized: state.answer.questionAnswersIsinitialized,
   answers: state.answer.questionAnswers,
   userInfo: state.authenticate.userInfo,
 });
