@@ -9,12 +9,13 @@ import Postlike from "../Like/Comments/Postlike";
 export default function AnswersListCard({ answers, user, answerLike, answerUnlike }) {
   return (
     <div>
-      {answers.reverse().map((answer) => {
+      {answers.map((answer) => {
+        console.log(answer);
         return (
           <Card style={{ width: "100%", marginTop: "6px" }} key={answer._id}>
-            <Link to={`/profile/${answer.writer._id}`}>
-              <Meta avatar={answer.writer.info.photo ? <Avatar src={answer.writer.info.photo}></Avatar>:<Avatar>{answer.writer.firstname.substring(0, 1)}</Avatar>}
-               title={answer.writer.firstname + " " + answer.writer.lastname} />
+            <Link to={`/profile/${answer?.writer?._id}`}>
+              <Meta avatar={answer?.writer?.info?.photo ? <Avatar src={answer?.writer?.info?.photo}></Avatar>:<Avatar>{answer.writer?.firstname?.substring(0, 1)}</Avatar>}
+               title={answer.writer?.firstname + " " + answer.writer?.lastname} />
             </Link>
             <br />
             <Link to={`/answers/${answer.questionId._id}`}>
