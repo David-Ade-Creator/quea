@@ -1,7 +1,6 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { CaretLeftOutlined, LoadingOutlined } from "@ant-design/icons";
 import { withStyles } from "@material-ui/styles";
-import { Button, Divider, Input, Upload, Form } from "antd";
+import { Button, Divider, Input, Upload, Form, Row, Col } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import Axios from "axios";
 import { routerActions } from "connected-react-router";
@@ -12,53 +11,42 @@ import { User } from "../../../store";
 import { baseUrl } from "../../../store/baseUrl";
 import Styles from "./styles";
 
-export const editProfileViewWithoutStyles = ({
+export const EditProfileViewWithoutStyles = ({
   match,
   classes,
-  users,
-  isUsersInitialized,
+  userData,
+  initializeUserProfileState,
+  pushToProfilePage,
+  editUser,
+  isStateAPILoading 
 }) => {
+  const userIdBeingEdited = match.params.id;
   const [isAPILoading, setIsAPILoading] = React.useState(false);
   const [imgUrl, setImgUrl] = useState("");
-  const [initialFormValues, setInitialFormValues] = React.useState({
-    photo: "",
-    firstname: "",
-    lastname: "",
-    description: "",
-    education: "",
-    country: "",
-    state: "",
-    address: "",
-  });
+  const [initialFormValues, setInitialFormValues] = React.useState(undefined);
+
+
+  const [form] = Form.useForm();
 
   React.useEffect(() => {
-    if (!isUsersInitialized) return;
-    const userIdBeingEdited = match.params.id;
+    initializeUserProfileState(userIdBeingEdited);
+  }, [initializeUserProfileState, userIdBeingEdited]);
 
-    const userBeingEdited = users.find(
-      (user) => user._id === userIdBeingEdited
-    );
-
-    //user isnt found, because the userid is invalid
-    if (!userBeingEdited) {
-      //pushToProfilePage();
-      new Error("Now editable");
-      return;
-    }
-    //set the initial form values
+  React.useEffect(()=>{
+    if(userData){
+    setImgUrl(userData?.info?.photo);
     setInitialFormValues({
-      photo: userBeingEdited.info.photo,
-      firstname: userBeingEdited.firstname,
-      lastname: userBeingEdited.lastname,
-      description: userBeingEdited.info.description,
-      education: userBeingEdited.info.education,
-      country: userBeingEdited.info.country,
-      state: userBeingEdited.info.state,
-      address: userBeingEdited.info.address,
+      photo: userData?.info?.photo,
+      firstname: userData?.firstname,
+      lastname: userData?.lastname,
+      description: userData?.info?.description,
+      education: userData?.info?.education,
+      country: userData?.info?.country,
+      state: userData?.info?.state,
+      address: userData?.info?.address,
     });
-  }, [isUsersInitialized, match.params.id, users]);
-
-  console.log("editable here", initialFormValues);
+  }
+  },[userData]);
   
   const uploadButton = (
     <div>
@@ -83,6 +71,7 @@ export const editProfileViewWithoutStyles = ({
     try {
       const imageUrl = await Axios.post(`${baseUrl}/api/q3/upload/s3`, formData, config);
       setImgUrl(imageUrl.data);
+      form.setFieldsValue({ photo: imageUrl.data });
       setIsAPILoading(false);
     } catch (error) {
       setIsAPILoading(false);
@@ -90,7 +79,7 @@ export const editProfileViewWithoutStyles = ({
   };
 
   const onFinish = (values) => {
-    console.log(values);
+    editUser({userId:userIdBeingEdited,...initialFormValues,...values});
   };
 
   return (
@@ -101,7 +90,12 @@ export const editProfileViewWithoutStyles = ({
         </Button>
       </div>
       <Divider />
-      <Upload
+      
+     {initialFormValues ? <Form layout="vertical" form={form} initialValues={initialFormValues } onFinish={onFinish}>
+        <Row gutter={16}>
+          <Col lg={24} md={24} sm={24} xs={24}>
+          <Form.Item name="photo">
+        <Upload
         name="avatar"
         listType="picture-card"
         className="avatar-uploader"
@@ -110,13 +104,15 @@ export const editProfileViewWithoutStyles = ({
         onChange={handleChange}
       >
         {imgUrl ? (
-          <img src={imgUrl} alt="avatar" style={{ width: "100%" }} />
+          <img src={imgUrl} alt="avatar" style={{ maxWidth: "104px", maxHeight: "104px" }} />
         ) : (
           uploadButton
         )}
       </Upload>
-      <Form initialValues={initialFormValues} onFinish={onFinish}>
-        <Form.Item
+        </Form.Item>
+          </Col>
+          <Col lg={12} md={12} sm={12} xs={12}>
+          <Form.Item
           label="Firstname"
           name="firstname"
           rules={[
@@ -128,7 +124,9 @@ export const editProfileViewWithoutStyles = ({
         >
           <Input placeholder="Enter firstname" />
         </Form.Item>
-        <Form.Item
+          </Col>
+          <Col lg={12} md={12} sm={12} xs={12}>
+          <Form.Item
           label="Lastname"
           name="lastname"
           rules={[
@@ -140,44 +138,54 @@ export const editProfileViewWithoutStyles = ({
         >
           <Input placeholder="Enter lastname" />
         </Form.Item>
-        <Form.Item label="Description(Optional)" name="description">
+          </Col>
+          <Col lg={24} md={24} sm={24} xs={24}>
+          <Form.Item label="Description(Optional)" name="description">
           <TextArea placeholder="Short self note" rows={4} />
         </Form.Item>
-        <Form.Item label="Education(Optional)" name="education">
+          </Col>
+          <Col lg={24} md={24} sm={24} xs={24}>
+          <Form.Item label="Education(Optional)" name="education">
           <Input placeholder="Educational Degree" />
         </Form.Item>
-        <Form.Item label="Country(Optional)" name="country">
+          </Col>
+          <Col lg={12} md={12} sm={12} xs={12}>
+          <Form.Item label="Country(Optional)" name="country">
           <Input placeholder="Enter you country" />
         </Form.Item>
-        <Form.Item label="State(Optional)" name="state">
+          </Col>
+          <Col lg={12} md={12} sm={12} xs={12}>
+          <Form.Item label="State(Optional)" name="state">
           <Input placeholder="Enter state" />
         </Form.Item>
-        <Form.Item label="Address(Optional)" name="address">
+          </Col>
+          <Col lg={24} nd={24} sm={24} xs={24}>
+          <Form.Item label="Address(Optional)" name="address">
           <Input placeholder="Enter your address" />
         </Form.Item>
-        <div>
-          <Button type="primary" htmlType="submit">
-            Save
+          </Col>
+        </Row>
+          <Button type="primary" loading={isStateAPILoading } htmlType="submit">
+             {isStateAPILoading ? "Saving..." : "Save"}
           </Button>
-        </div>
-      </Form>
+      </Form> : <>Fetching user data</>}
     </Pagewithheader>
   );
 };
 
-export const editProfileView = withStyles(Styles)(editProfileViewWithoutStyles);
+export const EditProfileView = withStyles(Styles)(EditProfileViewWithoutStyles);
 
 const mapState = (state) => ({
-  isUsersInitialized: state.user.isInitialized,
-  users: state.user.users,
+  userData : state.user.userProfile,
+  isStateAPILoading : state.user.isApiLoading,
 });
 
 const mapDispatch = (dispatch) => ({
-  pushToCurrenciesPage: () => dispatch(routerActions.replace("/")),
   initializeUserProfileState: (userId) =>
-    dispatch(User.Actions.userProfile(userId)),
+    dispatch(User.Actions.userProfileInfo(userId)),
+  editUser: (userDetails) => dispatch(User.Actions.userEdit(userDetails))
 });
 
 const connector = connect(mapState, mapDispatch);
 
-export const editProfilePage = connector(editProfileView);
+export const EditProfilePage = connector(EditProfileView);

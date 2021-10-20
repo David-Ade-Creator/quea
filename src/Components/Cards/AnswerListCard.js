@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Card, Divider } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
 import Meta from "antd/lib/card/Meta";
-//import PostComments from "../Like/Comments/PostComments";
 import Postlike from "../Like/Comments/Postlike";
 
 export default function AnswersListCard({ answers, user, answerLike, answerUnlike }) {
@@ -14,7 +13,8 @@ export default function AnswersListCard({ answers, user, answerLike, answerUnlik
         return (
           <Card style={{ width: "100%", marginTop: "6px" }} key={answer._id}>
             <Link to={`/profile/${answer.writer._id}`}>
-              <Meta avatar={<Avatar />} title={answer.writer.firstname + " " + answer.writer.lastname} />
+              <Meta avatar={answer.writer.info.photo ? <Avatar src={answer.writer.info.photo}></Avatar>:<Avatar>{answer.writer.firstname.substring(0, 1)}</Avatar>}
+               title={answer.writer.firstname + " " + answer.writer.lastname} />
             </Link>
             <br />
             <Link to={`/answers/${answer.questionId._id}`}>
@@ -32,7 +32,6 @@ export default function AnswersListCard({ answers, user, answerLike, answerUnlik
             <Divider />
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <Postlike answer={answer} user={user} answerLike={answerLike} answerUnlike={answerUnlike}/>
-              {/* <PostComments answer={answer} user={user}/> */}
             </div>
           </Card>
         );

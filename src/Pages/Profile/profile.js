@@ -1,25 +1,13 @@
 import React from "react";
-
 import { connect } from "react-redux";
 import Styles from "./styles";
 import { withStyles } from "@material-ui/core";
 import { Button, Col, Divider, Row } from "antd";
-import {
-  CaretLeftOutlined,
-  EditFilled,
-  // EditOutlined,
-  // QuestionCircleOutlined,
-  // ScheduleOutlined,
-} from "@ant-design/icons";
+import { CaretLeftOutlined, EditFilled } from "@ant-design/icons";
 import Avatar from "antd/lib/avatar/avatar";
 import { Pagewithheader } from "../../Components/Layout/PageWithHeader/pagewithheader";
-// import { ActivitiesTab } from "./profileTabs/activitiesTab";
-// import { QuestionTab } from "./profileTabs/questionTab";
-// import { AnswersTab } from "./profileTabs/answersTab";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { User } from "../../store";
-
-// const { TabPane } = Tabs;
+import { Link } from "react-router-dom";
 
 const ProfileViewWithoutStyles = ({
   classes,
@@ -27,16 +15,17 @@ const ProfileViewWithoutStyles = ({
   match,
   isUserProfileInitialized,
   userProfile,
-  isUserInitialized
+  isUserInitialized,
+  authUser,
 }) => {
-
+  const userId = match.params.id;
   React.useEffect(() => {
-    const userId = match.params.id;
     initializeUserProfileState(userId);
-  }, [initializeUserProfileState, match.params.id]);
+  }, [initializeUserProfileState, userId]);
+
   return (
     <Pagewithheader isLoading={!isUserProfileInitialized && !isUserInitialized}>
-       <div className={classes.backbtn}>
+      <div className={classes.backbtn}>
         <Button onClick={() => window.history.back()}>
           <CaretLeftOutlined />
         </Button>
@@ -44,13 +33,7 @@ const ProfileViewWithoutStyles = ({
       <Divider />
       <div className={classes.container}>
         <Row justify="center">
-          <Col
-            lg={12}
-            md={24}
-            sm={24}
-            xs={24}
-            className={classes.photodiv}
-          >
+          <Col lg={12} md={24} sm={24} xs={24} className={classes.photodiv}>
             <Avatar
               shape="square"
               size={102}
@@ -64,19 +47,15 @@ const ProfileViewWithoutStyles = ({
               <h3>{userProfile?.email}</h3>
             </span>
           </Col>
-          <Col
-            lg={12}
-            md={24}
-            sm={24}
-            xs={24}
-            className={classes.editdiv}
-          >
+          <Col lg={12} md={24} sm={24} xs={24} className={classes.editdiv}>
             <Row>
-              <Link to={`/editprofile/${userProfile?._id}`}>
-                <Button type="ghost" className={classes.editbtn}>
-                  <EditFilled />
-                </Button>
-              </Link>
+              {authUser?.data?.user._id === userId && (
+                <Link to={`/editprofile/${userProfile?._id}`}>
+                  <Button type="ghost" className={classes.editbtn}>
+                    <EditFilled />
+                  </Button>
+                </Link>
+              )}
             </Row>
             <h3>Education:</h3>
             <p>
@@ -102,43 +81,14 @@ const ProfileViewWithoutStyles = ({
                 ? `${userProfile?.info?.address}`
                 : "update your address"}
             </p>
+            <h3>Description:</h3>
+            <p>
+              {userProfile?.info?.description
+                ? `${userProfile?.info?.description}`
+                : "add a personal description"}
+            </p>
           </Col>
         </Row>
-        {/* <Tabs defaultActiveKey="1" centered>
-          <TabPane
-            tab={
-              <span>
-                <ScheduleOutlined />
-                Activities
-              </span>
-            }
-            key="1"
-          >
-            <ActivitiesTab />
-          </TabPane>
-          <TabPane
-            tab={
-              <span>
-                <QuestionCircleOutlined />
-                Questions
-              </span>
-            }
-            key="2"
-          >
-            <QuestionTab />
-          </TabPane>
-          <TabPane
-            tab={
-              <span>
-                <EditOutlined />
-                Answers
-              </span>
-            }
-            key="3"
-          >
-            <AnswersTab />
-          </TabPane>
-        </Tabs> */}
       </div>
     </Pagewithheader>
   );
@@ -150,6 +100,7 @@ const mapState = (state) => ({
   isUserInitialized: state.user.isInitialized,
   isUserProfileInitialized: state.user.isUserProfileInitialized,
   userProfile: state.user.userProfile,
+  authUser: state.authenticate.userInfo,
 });
 
 const mapDispatch = (dispatch) => ({

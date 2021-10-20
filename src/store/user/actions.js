@@ -1,5 +1,6 @@
 import Axios from "axios";
-import {baseUrl} from "../baseUrl";
+import { routerActions } from "connected-react-router";
+import { baseUrl } from "../baseUrl";
 import {
   USERS_LIST_FAIL,
   USERS_LIST_REQUEST,
@@ -55,22 +56,12 @@ function userProfileRequestFailed(error) {
   return { type: USER_PROFILE_FAIL, payload: error };
 }
 
-export const userProfileInfo = (userId) => async (dispatch, getState) => {
-  const { user } = getState();
-
+export const userProfileInfo = (userId) => async (dispatch) => {
   dispatch(userProfileRequest());
   try {
-     if (user.isInitialized){
-    const userData =  await user.users.find(
-      (singleUser) => singleUser._id === userId
-    );
-    dispatch(userProfileRequestSuccess(userData));
-  } else {
-    const userData  = await Axios.get(`${baseUrl}/api/q3/users/${userId}`);
+    const userData = await Axios.get(`${baseUrl}/api/q3/users/${userId}`);
     dispatch(userProfileRequestSuccess(userData.data));
-  }
   } catch (error) {
-
     dispatch(userProfileRequestFailed());
   }
 };
@@ -91,10 +82,11 @@ export const userEdit = (userDetail) => async (dispatch) => {
   dispatch(userEditRequest());
   try {
     const { data } = await Axios.put(
-      `${baseUrl}/api/q3/users/${userDetail.userId}`,
+      `${baseUrl}/api/q3/users/${userDetail.userId}/updateprofile`,
       userDetail
     );
     dispatch(userEditRequestSuccess(data));
+    routerActions.replace(`/profile/${userDetail.userId}`)
   } catch (error) {
     dispatch(userEditRequestFailed());
   }
@@ -122,7 +114,9 @@ export const userQuestions = (userId) => async (dispatch, getState) => {
       );
       dispatch(userQuestionRequestSuccess(data));
     } else {
-      const { data } = await Axios.get(`${baseUrl}/api/q3/users/${userId}/questions`);
+      const { data } = await Axios.get(
+        `${baseUrl}/api/q3/users/${userId}/questions`
+      );
       dispatch(userQuestionRequestSuccess(data));
     }
   } catch (error) {
@@ -152,7 +146,9 @@ export const userAnswers = (userId) => async (dispatch, getState) => {
       );
       dispatch(userAnswerRequestSuccess(data));
     } else {
-      const { data } = await Axios.get(`${baseUrl}/api/q3/users/${userId}/answers`);
+      const { data } = await Axios.get(
+        `${baseUrl}/api/q3/users/${userId}/answers`
+      );
       dispatch(userAnswerRequestSuccess(data));
     }
   } catch (error) {

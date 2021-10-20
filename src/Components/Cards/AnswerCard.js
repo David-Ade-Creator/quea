@@ -12,7 +12,7 @@ export default function AnswersCard({answers, user, answerLike, answerUnlike}) {
             {
                 answers.reverse().map((answer)=>{
                     return <Card style={{ width: "100%" }} key={answer._id}>
-                    <Link to={`/profile/${answer.writer._id}`} ><Meta avatar={<Avatar />} title={answer.writer.firstname + " " + answer.writer.lastname} /></Link>
+                    <Link to={`/profile/${answer.writer._id}`} ><Meta avatar={answer.writer.info.photo ? <Avatar src={answer.writer.info.photo}></Avatar>:<Avatar>{answer.writer.firstname.substring(0, 1)}</Avatar>} title={answer.writer.firstname + " " + answer.writer.lastname} /></Link>
                     <p>Answered <span><Moment fromNow>{answer.createdAt}</Moment></span></p>
                     <div style={{ marginTop: "10px" }}>
                     <div dangerouslySetInnerHTML={{ __html: answer.answer }}/>

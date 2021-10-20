@@ -81,11 +81,18 @@ const AnswerViewWithoutStyles = ({
         <div>
           <Meta
             avatar={
-              <Avatar>
+              question?.whoasked?.info?.photo ? (
                 <Link to={`/profile/${question?.whoasked?._id}`}>
-                  {question?.whoasked?.firstname.substring(0, 1)}
+                  <Avatar src={question?.whoasked?.info.photo} />
                 </Link>
-              </Avatar>
+              ) : (
+                <Link to={`/profile/${question?.whoasked?._id}`}>
+                  {" "}
+                  <Avatar>
+                    {question?.whoasked?.firstname.substring(0, 1)}
+                  </Avatar>
+                </Link>
+              )
             }
             title={question?.whoasked?.firstname}
             description={<Moment fromNow>{question?.createdAt}</Moment>}
@@ -97,9 +104,10 @@ const AnswerViewWithoutStyles = ({
         </div>
         <Divider />
         <div className={classes.answerProfile}>
+          {/* {userInfo.data.user.info.photo ? <Avatar src={userInfo.data.user.info.photo} /> :
           <Avatar>
             {userInfo.data.user.firstname.substring(0, 1).toUpperCase()}
-          </Avatar>
+          </Avatar>} */}
           <h3>
             {userInfo.data.user.firstname.toUpperCase()}, can you answer this
             question?

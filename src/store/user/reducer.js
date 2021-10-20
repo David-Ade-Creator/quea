@@ -10,7 +10,10 @@ import {
   USER_QUESTION_FAIL,
   USER_ANSWER_REQUEST,
   USER_ANSWER_SUCCESS,
-  USER_ANSWER_FAIL
+  USER_ANSWER_FAIL,
+  USER_PROFILE_EDIT_REQUEST,
+  USER_PROFILE_EDIT_SUCCESS,
+  USER_PROFILE_EDIT_FAIL
 } from "./actionTypes";
 
 const initialState = {
@@ -29,6 +32,9 @@ const initialState = {
   isUserAnswersInitialized: false,
   userAnswers: [],
   userAnswersError: null,
+  // user edit state
+  isApiLoading: false,
+  userEditError: null,
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -103,6 +109,25 @@ export const userReducer = (state = initialState, action) => {
           ...state,
           isUserAnswersInitialized: true,
           userAnswersError: action.payload,
+        };
+
+        case USER_PROFILE_EDIT_REQUEST:
+        return {
+          ...state,
+          isApiLoading : true,
+          userAnswersError: null,
+        };
+      case  USER_PROFILE_EDIT_SUCCESS:
+        return {
+          ...state,
+          isApiLoading : false,
+          userProfile: action.payload,
+        };
+      case USER_PROFILE_EDIT_FAIL:
+        return {
+          ...state,
+          isApiLoading : false,
+          userEditError: action.payload,
         };
     default:
       return state;

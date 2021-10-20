@@ -2,7 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { PageLayout } from "./Components/Layout/layout";
 import { ProtectedRoute } from "./Components/ProtectedRoute/protectedRoute";
-import { editProfilePage } from "./Pages/Profile/form/editProfile";
+import { EditProfilePage } from "./Pages/Profile/form/editProfile";
 import { ProfilePage } from "./Pages/Profile/profile";
 import { AnswerPage } from "./Pages/Questions/Answer/answer";
 import { HomePage } from "./Pages/Questions/Home/home";
@@ -49,7 +49,7 @@ const Routes = () => {
           exact
           path="/editprofile/:id"
           render={(props) => (
-            <ProtectedRoute {...props} Component={editProfilePage} />
+            <ProtectedRoute {...props} Component={EditProfilePage} />
           )}
         />
         <Route exact path="/signup" component={SignupPage} />,
