@@ -94,10 +94,11 @@ export const signin = (value) => async (dispatch) => {
   try {
     const { data } = await Axios.post(`${baseUrl}/api/q3/signin`, value);
     Cookie.set('userInfo', JSON.stringify(data));
+    console.log(data)
     dispatch(signinSuccess(data));
     dispatch(push("/"));
   } catch (error) {
-    //   console.log("CATCH = ", error.response);
+      // console.log("CATCH = ", error.response.data.errors);
     dispatch(signinFailed(error.response.data.errors));
   }
 };
