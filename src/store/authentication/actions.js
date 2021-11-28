@@ -94,7 +94,6 @@ export const signin = (value) => async (dispatch) => {
   try {
     const { data } = await Axios.post(`${baseUrl}/api/q3/signin`, value);
     Cookie.set('userInfo', JSON.stringify(data));
-    console.log(data)
     dispatch(signinSuccess(data));
     dispatch(push("/"));
   } catch (error) {
@@ -157,26 +156,8 @@ export const resetPassword = (value) => async (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
-  console.log('i was called');
+  console.log("clicked")
   Cookie.remove("userInfo");
   dispatch({ type: USER_LOGOUT });
+  dispatch(push("/signin"));
 };
-
-
-// export function initializeAuthenticationState(
-//   initializedFromPath
-// ){
-//   return async (dispatch) => {
-//       const loginRoute = "/signin";
-//       const authInitialResponse = await initialize();
-//       if (!authInitialResponse) {
-//           dispatch(signinRequest());
-
-//           if (initializedFromPath !== loginRoute)
-//               dispatch(routerActions.push(loginRoute, { redirectedFrom: initializedFromPath }));
-//           return;
-//       }
-//       dispatch(signinSuccess(authInitialResponse.accessToken));
-//       dispatch(routerActions.push(initializedFromPath || "/"));
-//   };
-// }

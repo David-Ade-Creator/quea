@@ -12,9 +12,6 @@ const {
   ANSWER_SAVE_SUCCESS,
   ANSWER_SAVE_REQUEST,
   ANSWER_LIST_SUCCESS,
-  QUESTIONANSWER_LIST_FAIL,
-  QUESTIONANSWER_LIST_SUCCESS,
-  QUESTIONANSWER_LIST_REQUEST,
   LIKEUNLIKE_ANSWER,
 } = require("./actionTypes");
 
@@ -94,42 +91,6 @@ export const saveAnswer = (answer) => async (dispatch) => {
   }
 };
 
-function questionAnswersListRequest() {
-  return {
-    type: QUESTIONANSWER_LIST_REQUEST
-  };
-}
-
-function questionAnswersListSuccess(answer) {
-  return {
-    type: QUESTIONANSWER_LIST_SUCCESS,
-    payload: answer
-  };
-}
-
-function questionAnswersListFailed(error) {
-  return {
-    type: QUESTIONANSWER_LIST_FAIL,
-    payload: error
-  };
-}
-
-export const questionAnswers = (questionId) => async (dispatch, getState) => {
-
-  dispatch(questionAnswersListRequest());
-  try {
-    const sent = await socket.emit("questionAnswers", questionId);
-    if (sent) {
-      socket.on("questionAnswerList", data => {
-        dispatch(questionAnswersListSuccess(data))
-      })
-    }
-  } catch (error) {
-    dispatch(questionAnswersListFailed("unable to load the answers"));
-  }
-};
-
-
 function likeUnlike(data) {
   return {
     type: LIKEUNLIKE_ANSWER,
@@ -147,18 +108,5 @@ export const answerLike = (data) => async (dispatch) => {
     }
   } catch (error) {
 
-  }
-}
-
-export const answerUnlike = (data) => async (dispatch) => {
-  try{
-    const sent = await socket.emit("answer unlike", data);
-    if (sent) {
-      socket.on("Output unlike", data => {
-        dispatch(likeUnlike(data));
-      })
-    }
-  } catch (error) {
-    console.log(error);
   }
 }

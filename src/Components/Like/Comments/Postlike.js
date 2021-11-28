@@ -1,7 +1,7 @@
 import { HeartFilled, HeartOutlined } from '@ant-design/icons';
 import React from 'react';
 
-function Postlike({answer, user, answerLike, answerUnlike}) {
+function Postlike({answer, user, answerLike}) {
     const [liked, setLiked] = React.useState(false);
     const answerId = answer._id;
     const wholiked = user._id;
@@ -17,13 +17,10 @@ function Postlike({answer, user, answerLike, answerUnlike}) {
         answerLike({answerId,wholiked});
     }
 
-    const unLike = () => {
-        answerUnlike({answerId,wholiked})
-    }
 
     return (
         
-        <span> {liked ? <HeartFilled onClick={unLike}/> : <HeartOutlined onClick={like} /> }{ answer.likes.length > 0 && " " + answer.likes.length} </span>
+        <span> {liked ? <HeartFilled onClick={like}/> : <HeartOutlined onClick={like} /> }{ answer.likes.length > 0 && " " + answer.likes.length} </span>
     )
 }
 

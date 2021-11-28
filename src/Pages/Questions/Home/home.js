@@ -15,7 +15,6 @@ const HomePageViewWithoutStyles = ({
   initializeAnswerState,
   userInfo,
   answerLike,
-  answerUnlike,
   newAnswerState
 }) => {
   React.useEffect(() => {
@@ -27,7 +26,7 @@ const HomePageViewWithoutStyles = ({
     <Pagewithheader isLoading={!isAnswersInitialized}>
       <div className={classes.container}>
         <div className={classes.answercontainer}>
-          <AnswersListCard answers={answers} user={userInfo.data.user} answerLike={answerLike} answerUnlike={answerUnlike}/>
+          <AnswersListCard answers={answers} user={userInfo.data.user} answerLike={answerLike}/>
         </div>
       </div>
     </Pagewithheader>
@@ -47,8 +46,6 @@ const mapDispatch = (dispatch) => ({
   newAnswerState:() => dispatch(Answer.Actions.answers()),
   answerLike: (data) =>
     dispatch(Answer.Actions.answerLike(data)),
-    answerUnlike: (data) =>
-    dispatch(Answer.Actions.answerUnlike(data)),
 });
 
 const connector = connect(mapState, mapDispatch);

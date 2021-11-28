@@ -7,7 +7,6 @@ import { withStyles } from "@material-ui/core";
 
 import { Button, Divider } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
-import AnswersCard from "../../../Components/Cards/AnswerCard";
 import { Pagewithheader } from "../../../Components/Layout/PageWithHeader/pagewithheader";
 import Meta from "antd/lib/card/Meta";
 import Moment from "react-moment";
@@ -16,6 +15,7 @@ import AnswerEditor from "../../../Components/Editors/answerEditor/answerEditor"
 import Form from "antd/lib/form/Form";
 import { CaretLeftOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import AnswersListCard from "../../../Components/Cards/AnswerListCard";
 
 const AnswerViewWithoutStyles = ({
   classes,
@@ -23,13 +23,12 @@ const AnswerViewWithoutStyles = ({
   initializeQuestionDetail,
   question,
   answers,
-  isInitialized,
+  isAnswersInitialized,
   initializeQuestionState,
-  initializeAnswerListState,
+  initializeAnswerState,
   userInfo,
   answerQuestion,
   answerLike,
-  answerUnlike,
 }) => {
   const questionId = match.params.id;
   const writer = userInfo.data.user._id;
@@ -53,9 +52,9 @@ const AnswerViewWithoutStyles = ({
   React.useEffect(() => {
     const questionId = match.params.id;
     initializeQuestionDetail(questionId);
-    initializeAnswerListState(questionId);
+    initializeAnswerState();
   }, [
-    initializeAnswerListState,
+    initializeAnswerState,
     initializeQuestionDetail,
     initializeQuestionState,
     match.params.id,
@@ -69,7 +68,7 @@ const AnswerViewWithoutStyles = ({
   return (
     <Pagewithheader
       onBack={() => window.history.back()}
-      isLoading={!isInitialized}
+      isLoading={!isAnswersInitialized}
     >
       <div className={classes.container}>
         <div className={classes.backbtn}>
@@ -98,16 +97,9 @@ const AnswerViewWithoutStyles = ({
             description={<Moment fromNow>{question?.createdAt}</Moment>}
           />
           <h3>{question?.question}</h3>
-          <h4>
-            {answers.length > 0 ? `${answers.length} answers` : "No answer yet"}
-          </h4>
         </div>
         <Divider />
         <div className={classes.answerProfile}>
-          {/* {userInfo.data.user.info.photo ? <Avatar src={userInfo.data.user.info.photo} /> :
-          <Avatar>
-            {userInfo.data.user.firstname.substring(0, 1).toUpperCase()}
-          </Avatar>} */}
           <h3>
             {userInfo.data.user.firstname.toUpperCase()}, can you answer this
             question?
@@ -146,12 +138,7 @@ const AnswerViewWithoutStyles = ({
         )}
 
         <div className={classes.answercontainer}>
-          <AnswersCard
-            answers={answers}
-            answerLike={answerLike}
-            answerUnlike={answerUnlike}
-            user={userInfo.data.user}
-          />
+        <AnswersListCard questionId={questionId} answers={answers} user={userInfo.data.user} answerLike={answerLike}/>
         </div>
       </div>
     </Pagewithheader>
@@ -162,8 +149,8 @@ export const AnswerPageView = withStyles(Styles)(AnswerViewWithoutStyles);
 
 const mapState = (state) => ({
   question: state.question.question,
-  isInitialized: state.answer.questionAnswersIsinitialized,
-  answers: state.answer.questionAnswers,
+  answers: state.answer.answers,
+  isAnswersInitialized: state.answer.answersIsinitialized,
   userInfo: state.authenticate.userInfo,
 });
 
@@ -172,12 +159,12 @@ const mapDispatch = (dispatch) => ({
     dispatch(Question.Actions.listquestion(force)),
   initializeQuestionDetail: (questionId) =>
     dispatch(Question.Actions.questionDetails(questionId)),
-  initializeAnswerListState: (questionId) =>
-    dispatch(Answer.Actions.questionAnswers(questionId)),
+    initializeAnswerState:() => dispatch(Answer.Actions.listAnswers()),
+    newAnswerState:() => dispatch(Answer.Actions.answers()),
+    answerLike: (data) =>
+      dispatch(Answer.Actions.answerLike(data)),
   answerQuestion: (questionAnswer) =>
     dispatch(Answer.Actions.saveAnswer(questionAnswer)),
-  answerLike: (data) => dispatch(Answer.Actions.answerLike(data)),
-  answerUnlike: (data) => dispatch(Answer.Actions.answerUnlike(data)),
 });
 
 const connector = connect(mapState, mapDispatch);

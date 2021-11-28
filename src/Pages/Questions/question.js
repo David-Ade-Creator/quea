@@ -31,10 +31,6 @@ const QuestionViewWithoutStyles = ({
     newQuestionState();
   }, [initalizeUsersState, initializeAnswerState, initializeQuestionState, newQuestionState, socket]);
 
-  const loadMore = () => {
-    console.log("loadmore");
-  };
-
   return (
     <>
       <Pagewithheader
@@ -45,16 +41,12 @@ const QuestionViewWithoutStyles = ({
           className="demo-loadmore-list"
           loading={!isInitialized}
           itemLayout="horizontal"
-          loadMore={loadMore}
           dataSource={questions}
           renderItem={(item) => (
             <QuestionListCard key={item._id} question={item} />
           )}
         />
         <br />
-        {/* <div className={classes.loadmore}>
-          <Button type="primary">Load more</Button>
-        </div> */}
       </Pagewithheader>
     </>
   );

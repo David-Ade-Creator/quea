@@ -6,19 +6,12 @@ import {
   ANSWER_SAVE_REQUEST,
   ANSWER_SAVE_SUCCESS,
   LIKEUNLIKE_ANSWER,
-  QUESTIONANSWER_LIST_FAIL,
-  QUESTIONANSWER_LIST_REQUEST,
-  QUESTIONANSWER_LIST_SUCCESS,
 } from "./actionTypes";
 
 const initialState = {
   answersIsinitialized: false,
   answers: [],
   answersError: null,
-  // answers state for selected question
-  questionAnswersIsinitialized: false,
-  questionAnswers: [],
-  questionAnswersError: null,
   // answers state for saving answer
   isSaveAnswerInitialized: false,
   isAnswerSaved:false,
@@ -45,25 +38,7 @@ export const answerReducer = (state = initialState, action) => {
         answersIsinitialized: true,
         answersError: action.payload,
       };
-    case QUESTIONANSWER_LIST_REQUEST:
-      return {
-        ...state,
-        questionAnswersIsinitialized: false,
-        questionAnswers:[]
-      };
-    case QUESTIONANSWER_LIST_SUCCESS:
-      return {
-        ...state,
-        questionAnswersIsinitialized: true,
-        questionAnswers: action.payload,
-        questionAnswersError: null,
-      };
-    case QUESTIONANSWER_LIST_FAIL:
-      return {
-        ...state,
-        questionAnswersIsinitialized: true,
-        questionAnswersError: action.payload,
-      };
+
     case ANSWER_SAVE_REQUEST:
       return {
         ...state,
@@ -75,7 +50,7 @@ export const answerReducer = (state = initialState, action) => {
         ...state,
         isSaveAnswerInitialized: true,
         isAnswerSaved:true,
-        questionAnswers: action.payload,
+        answers: action.payload,
         answerSaveError: null,
       };
     case ANSWER_SAVE_FAIL:

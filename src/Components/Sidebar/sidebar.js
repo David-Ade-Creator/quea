@@ -3,7 +3,8 @@ import { Button, Drawer } from 'antd';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 
-export default function Sidebar({visible,toggleSideNav,userInfo, logout}) {
+export default function Sidebar({visible,toggleSideNav,userInfo,logout}){
+
     return (
       <Drawer
       title="Quea Platform"
@@ -16,7 +17,7 @@ export default function Sidebar({visible,toggleSideNav,userInfo, logout}) {
       <h3><Link to="/">Home</Link></h3>
       <h3><Link to="/questions">Questions</Link></h3>
       <h3><Link to={`/profile/${userInfo.data.user._id}`}>Profile</Link></h3>
-      {/* <span><Button type="primary" key="logout" onClick={console.log('clicked')}>Logout</Button></span> */}
+      {/* <Button type="primary" onClick={logout()}>Logout</Button> */}
     </Drawer>
     )
 }

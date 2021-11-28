@@ -32,7 +32,6 @@ const NavHeaderWithoutStyles = ({
           <ul className={classes.navlist2}>
             <li className={classes.navitems}><Link to="/questions" style={{color:"white"}}><EditOutlined /></Link></li>
             <li className={classes.navitems}><Link to="/" style={{color:"white"}}><HomeOutlined /></Link></li>
-            {/* <li className={classes.navitems}><Link to={`/profile/${userInfo.data.user._id}`} style={{color:"white"}}><UserOutlined /></Link></li> */}
           </ul>
           <span>
           <Button

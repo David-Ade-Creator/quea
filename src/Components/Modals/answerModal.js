@@ -3,9 +3,8 @@ import { connect } from "react-redux";
 
 import Styles from "./styles";
 import { withStyles } from "@material-ui/styles";
-import { Button, Input } from "antd";
+import { Input, Form, Button, Space } from "antd";
 import Modal from "antd/lib/modal/Modal";
-import Form from "antd/lib/form/Form";
 import { LinkOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import { Question } from "../../store";
 
@@ -15,19 +14,14 @@ const AnswerModalWithoutStyles = ({
   userInfo,
   submitQuestion,
 }) => {
-  const whoasked = userInfo.data.user._id;
+  const whoasked = userInfo?.data?.user._id;
 
-  const [question, setQuestion] = React.useState("");
-  const [link, setLink] = React.useState("");
+  const [form] = Form.useForm();
 
-  React.useEffect(() => {;
-    return () => {
-      //
-    };
-  }, []);
-
-  const onFinish = () => {
-    submitQuestion({question,link,whoasked});
+  const onFinish = (values) => {
+    submitQuestion({...values,whoasked});
+    toggleAnswerModal();
+    form.resetFields();
   };
 
   return (
@@ -36,33 +30,47 @@ const AnswerModalWithoutStyles = ({
       title="Ask Quea"
       onOk={toggleAnswerModal}
       onCancel={toggleAnswerModal}
-      footer={[
-        <Button key="back" onClick={toggleAnswerModal}>
-          Cancel
-        </Button>,
-        <Button key="submit" type="primary" onClick={()=>{onFinish();toggleAnswerModal()}}>
-          Submit
-        </Button>,
-      ]}
+      footer={null}
     >
-      <Form>
+      <Form initialValues={{question:"",link:""}} onFinish={onFinish} form={form}>
+      <Form.Item
+        name="question"
+        rules={[
+          {
+            required: true,
+            message: 'A questio must be asked!',
+          },
+        ]}
+      >
         <Input
           type="text"
-          name="question"
           prefix={<QuestionCircleOutlined className="site-form-item-icon" />}
           placeholder="Ask Quea"
           bordered={false}
-          onChange={(e)=>setQuestion(e.target.value)}
         />
-        <br />
+      </Form.Item>
+
+      <Form.Item
+        name="link"
+      >
         <Input
           type="text"
-          name="link"
           prefix={<LinkOutlined className="site-form-item-icon" />}
           placeholder="Enter link of context (optional)"
           bordered={false}
-          onChange={(e)=>setLink(e.target.value)}
         />
+      </Form.Item>
+      <Form.Item
+      >
+        <Space>
+        <Button type="ghost" onClick={toggleAnswerModal}>
+          Cancel
+        </Button>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+        </Space>
+      </Form.Item>
       </Form>
     </Modal>
   );

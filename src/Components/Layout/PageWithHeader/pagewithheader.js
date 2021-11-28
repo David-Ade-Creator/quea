@@ -10,13 +10,13 @@ import { NavHeader } from "../Header/Header";
 import Sidebar from "../../Sidebar/sidebar";
 import { AnswerModal } from "../../Modals/answerModal";
 import { CaretUpOutlined } from "@ant-design/icons";
+import { Authentication } from "../../../store";
 
 export const PagewithheaderViewWithoutStyles = ({
   children,
   isLoading,
   pageTitle,
   pageHeaderExtra,
-  showModalState,
   isAnswerSaved,
   isSaveAnswerInitialized,
   onBack,
@@ -87,9 +87,12 @@ const mapState = (state) => ({
   isAnswerSaved: state.answer.isAnswerSaved,
   isSaveAnswerInitialized : state.answer.isSaveAnswerInitialized,
   userInfo : state.authenticate.userInfo,
-  logout: state.authenticate.logout
 });
 
-const connector = connect(mapState, null);
+const mapDispatch = (dispatch) => ({
+  logout: () => dispatch(Authentication.Actions.logout()),
+});
+
+const connector = connect(mapState, mapDispatch);
 
 export const Pagewithheader = connector(PagewithheaderView);
